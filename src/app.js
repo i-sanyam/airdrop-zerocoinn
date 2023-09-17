@@ -14,7 +14,7 @@ const handleSubmit = async (event) => {
 			},
 		});
 		setDisplayFlex('successMessage');
-		setTextContent('successMessageText', 'Transaction successful');
+		setTextContent('successMessageText', 'Airdrop successful');
 		hideElementById('errorMessage');
 		setInnerHtml('signatureUrl', `<a href="${response.data.txUrl}" target="_blank">View transaction on Solana Explorer</a>`);
 		setTextContent('signatureText', `Signature: ${response.data.signature}`)
