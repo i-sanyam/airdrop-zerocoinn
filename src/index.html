@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+	<meta charset="UTF-8">
+	<title>Zerocoinn Airdrop</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css" crossorigin="anonymous"
+		referrerpolicy="no-referrer" />
+</head>
+
+<body>
+	<div style="width: 400px; margin: 0 auto;">
+		<h1>Zerocoinn Airdrop</h1>
+		<form id="myForm" onSubmit="handleSubmit(event)">
+			<div style="margin-bottom: 16px;">
+				<label for="destination_address">Wallet Address</label>
+				<input type="text" id="destination_address" name="destination_address" class="ant-input" />
+			</div>
+			<div style="margin-bottom: 16px;">
+				<label for="amount">Amount</label>
+				<input type="text" id="amount" name="amount" class="ant-input" />
+			</div>
+			<div style="display: flex; justify-content: space-between;">
+				<button type="button" class="ant-btn ant-btn-danger" onClick="handleReset()">Reset</button>
+				<button type="submit" class="ant-btn ant-btn-primary">Submit</button>
+			</div>
+			<div id="errorMessage" style="color: red; margin-top: 16px;"></div>
+			<div id="successMessage" style="color: green; margin-top: 16px;"></div>
+		</form>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		const handleSubmit = async (event) => {
+			event.preventDefault();
+			const form = document.getElementById('myForm');
+			const formData = new FormData(form);
+			const destinationAddress = formData.get('destination_address');
+			const amount = formData.get('amount');
+			try {
+				const response = await axios.get('/api/airdrop/ZEROCOINN', {
+					params: {
+						amount,
+						destination_address: destinationAddress,
+					},
+				});
+				const successMessage = document.getElementById('successMessage');
+				successMessage.innerHTML = `\n<a href="${response.data.txUrl}">Signature: ${response.data.signature}</a>`;
+				const errorMessage = document.getElementById('errorMessage');
+				errorMessage.textContent = '';
+			} catch (error) {
+				const errorMessage = document.getElementById('errorMessage');
+				errorMessage.textContent = error.response.data.message;
+        const successMessage = document.getElementById('successMessage');
+        successMessage.textContent = '';
+			}
+			// console.log(response.data);
+		};
+
+		const handleReset = () => {
+			const form = document.getElementById('myForm');
+			form.reset();
+			const errorMessage = document.getElementById('errorMessage');
+			errorMessage.textContent = '';
+			const successMessage = document.getElementById('successMessage');
+			successMessage.textContent = '';
+		};
+	</script>
+</body>
+
+</html>
