@@ -15,7 +15,7 @@
 		</div>
 		<div class="sm:mx-auto sm:w-full sm:max-w-sm">
 			<h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zerocoinn Airdrop</h1>
-			<img class="mx-auto h-10 w-auto" src="images/zerocoinn.png" alt="logo" />
+			<img class="mx-auto h-30 w-auto" src="images/zerocoinn.png" alt="logo" />
 			<h6 class="mt-1 text-center text-s leading-9 tracking-tight text-gray-500">devnet</h6>
 		</div>
 		<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -45,18 +45,22 @@
 							id="submitButton">Submit</button>
 					</div>
 				</div>
-				<div class="flex" id="errorMessage" class="errorMessage" style="display: none;">
-					<span id="errorMessageText"></span>
-					<button type="button" onClick="handleCloseError()">X</button>
+
+				<div class="flex" id="responseMessage">
+					<span id="responseMessageText" class="text-red-600"></span>
 				</div>
-				<div class="flex" id="successMessage" style="display: none;">
-					<span id="successMessageText"></span>
-					<button type="button" onClick="handleCloseSuccess()">X</button>
+				<div class="flex text-green-600 align-center" id="signature">
+					<span id="signatureText"></span>
 				</div>
-				<div class="flex" id="signatureText" style="margin-top: 16px; color: green;"></div>
-				<div class="flex" id="signatureUrl" style="margin-top: 16px; color: blue;"></div>
+				<div class="justify-center font-semibold leading-6 text-blue-400 hover:text-blue-300">
+					<a href="" id="signatureUrl" target="_blank"></a>
+				</div>
 			</form>
 		</div>
+		<br />
+		<br />
+		<br />
+		<!-- Footers -->
 		<div>
 			<div class="flex sm:mx-auto sm:w-full sm:max-w-sm justify-center">
 				<p class="font-semibold leading-6 text-blue-600 hover:text-blue-500">
