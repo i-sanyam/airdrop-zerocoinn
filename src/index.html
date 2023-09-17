@@ -7,6 +7,34 @@
 	<title>Zerocoinn Airdrop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css" crossorigin="anonymous"
 		referrerpolicy="no-referrer" />
+	<style>
+		.errorMessage {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			background-color: #f5222d;
+			color: #fff;
+			padding: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			text-align: center;
+			width: 100%;
+		}
+
+		.errorMessageText {
+    	margin: 0 auto;
+  	}
+
+		.errorMessage button {
+			background-color: transparent;
+			border: none;
+			color: #fff;
+			font-size: 16px;
+			cursor: pointer;
+		}
+	</style>
 </head>
 
 <body>
@@ -25,7 +53,10 @@
 				<button type="button" class="ant-btn ant-btn-danger" onClick="handleReset()">Reset</button>
 				<button type="submit" class="ant-btn ant-btn-primary">Submit</button>
 			</div>
-			<div id="errorMessage" style="color: red; margin-top: 16px;"></div>
+			<div id="errorMessage" class="errorMessage" style="display: none;">
+				<span id="errorMessageText"></span>
+				<button type="button" onClick="handleCloseError()">X</button>
+			</div>
 			<div id="successMessage" style="color: green; margin-top: 16px;"></div>
 		</form>
 	</div>
@@ -47,12 +78,12 @@
 				const successMessage = document.getElementById('successMessage');
 				successMessage.innerHTML = `\n<a href="${response.data.txUrl}">Signature: ${response.data.signature}</a>`;
 				const errorMessage = document.getElementById('errorMessage');
-				errorMessage.textContent = '';
+				errorMessage.style.display = 'none';
 			} catch (error) {
 				const errorMessage = document.getElementById('errorMessage');
-				errorMessage.textContent = error.response.data.message;
-        const successMessage = document.getElementById('successMessage');
-        successMessage.textContent = '';
+				const errorMessageText = document.getElementById('errorMessageText');
+				errorMessageText.textContent = error.response.data.message;
+				errorMessage.style.display = 'flex';
 			}
 			// console.log(response.data);
 		};
@@ -61,9 +92,14 @@
 			const form = document.getElementById('myForm');
 			form.reset();
 			const errorMessage = document.getElementById('errorMessage');
-			errorMessage.textContent = '';
+			errorMessage.style.display = 'none';
 			const successMessage = document.getElementById('successMessage');
 			successMessage.textContent = '';
+		};
+
+		const handleCloseError = () => {
+			const errorMessage = document.getElementById('errorMessage');
+			errorMessage.style.display = 'none';
 		};
 	</script>
 </body>
