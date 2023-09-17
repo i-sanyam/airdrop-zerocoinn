@@ -26,7 +26,7 @@ const errorHandler = (err, req, res, next) => {
 
 router.use(express.static(path.join(__dirname, 'src')));
 
-router.get('/api/airdrop/ZEROCOINN', async (req, res) => {
+router.get('/airdrop/ZEROCOINN', async (req, res) => {
   try {
     const { destination_address, amount } = req.query;
     const { signature, txUrl, } = await sendTokens('ZEROCOINN', destination_address, amount);
