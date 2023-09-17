@@ -18,5 +18,8 @@
     "netlify-cli": "16.3.3",
     "netlify-lambda": "2.0.16",
     "serverless-http": "3.2.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
   }
 }
