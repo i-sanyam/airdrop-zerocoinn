@@ -12,7 +12,7 @@ const handleSubmit = async (event) => {
 	hideElementById('errorMessage');
 	try {
 		showLoader();
-		const response = await axios.get('/api/airdrop/ZEROCOINN', {
+		const response = await axios.get('/.netlify/functions/api/airdrop/ZEROCOINN', {
 			params: {
 				amount,
 				destination_address: destinationAddress,
