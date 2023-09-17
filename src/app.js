@@ -38,7 +38,6 @@ const setUrl = (elementId, text, url) => {
 
 const setTextContent = (elementId, text) => {
 	const elem = document.getElementById(elementId);
-	// elem.style.display = 'flex';
 	elem.textContent = text;
 };
 
