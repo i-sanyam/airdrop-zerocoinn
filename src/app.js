@@ -75,11 +75,14 @@ const handleCloseSuccess = () => {
 };
 
 const loader = document.getElementById('loader');
+const submitButton = document.getElementById('submitButton');
 
 const showLoader = () => {
+	submitButton.disabled = true;
 	loader.style.display = 'flex';
 };
 
 const hideLoader = () => {
+	submitButton.disabled = false;
 	loader.style.display = 'none';
 };
