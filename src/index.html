@@ -5,49 +5,78 @@
 	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 	<meta charset="UTF-8">
 	<title>Zerocoinn Airdrop</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css" crossorigin="anonymous"
-		referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="style.css">
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-	<div id="loader" style="justify-content: center; display: none;">
-		<img src="images/loader.gif" alt="Loading..." style="width: 4rem; height: 4rem; align-items: center;"/>
-	</div>
-	<div class="form-container">
-		<h1 class="heading">Zerocoinn Airdrop</h1>
-		<h6>devnet</h6>
-		<img src="images/zerocoinn.png" alt="logo" class="logo" />
-		<form id="myForm" onSubmit="handleSubmit(event)">
-			<div style="margin-bottom: 16px;">
-				<label for="destination_address">Wallet Address</label>
-				<input type="text" id="destination_address" name="destination_address" class="ant-input" />
+	<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+		<div id="loader" style="justify-content: center; display: none;">
+			<img src="images/loader.gif" alt="Loading..." style="width: 4rem; height: 4rem; align-items: center;" />
+		</div>
+		<div class="sm:mx-auto sm:w-full sm:max-w-sm">
+			<h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zerocoinn Airdrop</h1>
+			<img class="mx-auto h-10 w-auto" src="images/zerocoinn.png" alt="logo" />
+			<h6 class="mt-1 text-center text-s leading-9 tracking-tight text-gray-500">devnet</h6>
+		</div>
+		<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+			<form class="space-y-6" id="myForm" onSubmit="handleSubmit(event)">
+				<div>
+					<label for="destination_address" class="block text-sm font-medium leading-6 text-gray-900">Wallet
+						Address</label>
+					<input type="text" id="destination_address" name="destination_address" required
+						placeholder="Your Devent Wallet Address"
+						class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" />
+				</div>
+				<div>
+					<label for="amount" class="block text-sm font-medium leading-6 text-gray-900">Zerocoinns to Airdrop</label>
+					<input type="text" id="amount" name="amount" required
+						placeholder="Amount to transfer"
+						class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" />
+				</div>
+				<div class="flex">
+					<div class="w-3/12">
+						<button type="button"
+							class="rounded-md bg-white-600 px-2 py-1.5 text-xs font-semibold leading-6 text-black shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+							onClick="handleReset()">Reset</button>
+					</div>
+					<div class="w-9/12">
+						<button type="submit"
+							class="w-full rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+							id="submitButton">Submit</button>
+					</div>
+				</div>
+				<div class="flex" id="errorMessage" class="errorMessage" style="display: none;">
+					<span id="errorMessageText"></span>
+					<button type="button" onClick="handleCloseError()">X</button>
+				</div>
+				<div class="flex" id="successMessage" style="display: none;">
+					<span id="successMessageText"></span>
+					<button type="button" onClick="handleCloseSuccess()">X</button>
+				</div>
+				<div class="flex" id="signatureText" style="margin-top: 16px; color: green;"></div>
+				<div class="flex" id="signatureUrl" style="margin-top: 16px; color: blue;"></div>
+			</form>
+		</div>
+		<div>
+			<div class="flex sm:mx-auto sm:w-full sm:max-w-sm justify-center">
+				<p class="font-semibold leading-6 text-blue-600 hover:text-blue-500">
+					<a target="_blank" href="https://github.com/i-sanyam/airdrop-zerocoinn">
+						Github - Zerocoinn Airdrop
+					</a>
+				</p>
 			</div>
-			<div style="margin-bottom: 16px;">
-				<label for="amount">Amount</label>
-				<input type="text" id="amount" name="amount" class="ant-input" />
+			<div class="flex sm:mx-auto sm:w-full sm:max-w-sm justify-center">
+				<p class="font-semibold leading-6">
+					Made with
+					<span style="color: red;">&hearts;</span>
+					by
+					<a class="font-semibold leading-6 text-blue-600 hover:text-blue-500" href="https://sanyamaggarwal.com">
+						Sanyam Aggarwal
+					</a>
+					in India
+				</p>
 			</div>
-			<div style="display: flex; justify-content: space-between;">
-				<button type="button" class="ant-btn ant-btn-danger" onClick="handleReset()">Reset</button>
-				<button type="submit" class="ant-btn ant-btn-primary" id="submitButton">Submit</button>
-			</div>
-			<div id="errorMessage" class="errorMessage" style="display: none;">
-				<span id="errorMessageText"></span>
-				<button type="button" onClick="handleCloseError()">X</button>
-			</div>
-			<div id="successMessage" class="successMessage" style="display: none;">
-				<span id="successMessageText"></span>
-				<button type="button" onClick="handleCloseSuccess()">X</button>
-			</div>
-			<div id="signatureText" style="margin-top: 16px; color: green;"></div>
-			<div id="signatureUrl" style="margin-top: 16px; color: blue;"></div>
-		</form>
-	</div>
-	<div class="footer" style="justify-content: center; align-items: center; display: flex;">
-		<p style="display: block;"><a target="_blank" href="https://github.com/i-sanyam/airdrop-zerocoinn">Github - Zerocoinn Airdrop</a></p>
-	</div>
-	<div class="footer" style="justify-content: center; align-items: center; display: flex;">
-		<p style="display: block;">Made with <span style="color: red;">&hearts;</span> by <a href="https://sanyamaggarwal.com">Sanyam Aggarwal</a> in India</p>
+		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="app.js"></script>
