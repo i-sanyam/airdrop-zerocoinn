@@ -48,14 +48,11 @@ const validateTransferAmount = (unsanitizedAmount, isMintDisabled) => {
 			throw new Error('Transfer Amount is not a number');
 		}
 		const amount = Number(unsanitizedAmount);
-		if (isMintDisabled && amount > 1) {
-			throw new Error('Mint is disabled, max transfer amount is 1');
+		if (isMintDisabled && amount > 0.01) {
+			throw new Error('Mint is disabled, max transfer amount is 0.01');
 		}
 		if (amount <= 0) {
 			throw new Error('Transfer Amount must be greater than 0');
-		}
-		if (amount > 1000) {
-			throw new Error('Transfer Amount too high');
 		}
 		return amount;
 	} catch (e) {
