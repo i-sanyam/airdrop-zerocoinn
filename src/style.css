@@ -49,3 +49,10 @@ body {
   cursor: pointer;
   margin-left: 8px;
 }
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
