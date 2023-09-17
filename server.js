@@ -19,13 +19,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(500).send('Something broke!');
 };
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/index.html'));
-});
-
-app.get('/images/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/images/favicon.ico'));
-});
+app.use(express.static(path.join(__dirname, 'src')));
 
 app.get('/api/airdrop/ZEROCOINN', async (req, res) => {
   try {
