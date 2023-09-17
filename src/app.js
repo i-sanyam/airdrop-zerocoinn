@@ -6,7 +6,12 @@ const handleSubmit = async (event) => {
 	const formData = new FormData(form);
 	const destinationAddress = formData.get('destination_address');
 	const amount = formData.get('amount');
+	hideElementById('signatureUrl');
+	hideElementById('signatureText');
+	hideElementById('successMessage');
+	hideElementById('errorMessage');
 	try {
+		showLoader();
 		const response = await axios.get('/api/airdrop/ZEROCOINN', {
 			params: {
 				amount,
@@ -17,8 +22,10 @@ const handleSubmit = async (event) => {
 		setTextContent('successMessageText', 'Airdrop successful');
 		hideElementById('errorMessage');
 		setInnerHtml('signatureUrl', `<a href="${response.data.txUrl}" target="_blank">View transaction on Solana Explorer</a>`);
-		setTextContent('signatureText', `Signature: ${response.data.signature}`)
+		setTextContent('signatureText', `Signature: ${response.data.signature}`);
+		hideLoader();
 	} catch (error) {
+		hideLoader();
 		setDisplayFlex('errorMessage');
 		setTextContent('errorMessageText', error.response.data.message);
 		hideElementById('signatureUrl');
@@ -51,6 +58,7 @@ const handleReset = () => {
 	hideElementById('successMessage');
 	hideElementById('errorMessage');
 	hideElementById('signatureText');
+	hideLoader();
 };
 
 const hideElementById = (elementId) => {
@@ -64,4 +72,14 @@ const handleCloseError = () => {
 
 const handleCloseSuccess = () => {
 	hideElementById('successMessage');
+};
+
+const loader = document.getElementById('loader');
+
+const showLoader = () => {
+	loader.style.display = 'flex';
+};
+
+const hideLoader = () => {
+	loader.style.display = 'none';
 };
