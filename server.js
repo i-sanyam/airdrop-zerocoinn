@@ -30,9 +30,9 @@ app.get('/images/favicon.ico', (req, res) => {
 app.get('/api/airdrop/ZEROCOINN', async (req, res) => {
   try {
     const { destination_address, amount } = req.query;
-    const { signature } = await sendTokens('ZEROCOINN', destination_address, amount);
+    const { signature, txUrl, } = await sendTokens('ZEROCOINN', destination_address, amount);
     return res.status(200).json({
-      signature,
+      signature, txUrl,
     });
   } catch (e) {
     return res.status(500).json({

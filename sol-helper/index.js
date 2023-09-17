@@ -82,6 +82,7 @@ async function sendTokens(tokenSymbol, destinationWalletPublicKeyString, unsanit
 			RPC: tokenRpcUrl, 
 			SECRET_KEY: authoritySecretKey, 
 			MINT_ADDRESS: tokenMintPublicAddress,
+			CLUSTER: tokenCluster,
 			isMintDisabled, numberDecimals,
 		} = await getTokenInfo(tokenSymbol);
 		const transferAmount = validateTransferAmount(unsanitizedTransferAmount, isMintDisabled);
@@ -113,7 +114,8 @@ async function sendTokens(tokenSymbol, destinationWalletPublicKeyString, unsanit
 		const latestBlockHash = await solanaConnection.getLatestBlockhash('confirmed');
 		tx.recentBlockhash = latestBlockHash.blockhash;
 		const signature = await sendAndConfirmTransaction(solanaConnection, tx, [tokenAuthorityKeyPair]);
-		return { signature, };
+		const txUrl = `https://explorer.solana.com/tx/${signature}?cluster=${tokenCluster}`
+		return { signature, txUrl, };
 	} catch (error) {
 		// console.error('Transaction failed', error && error.message);
 		throw error;
