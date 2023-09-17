@@ -2,7 +2,6 @@ const express = require('express');
 const { Router, } = require('express');
 const serverless = require('serverless-http');
 
-const path = require('path');
 const rateLimit = require('express-rate-limit');
 
 const router = Router();
@@ -13,18 +12,16 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later',
 });
 
-const { sendTokens } = require('../../sol-helper');
+const { sendTokens } = require('../sol-helper');
 
 const app = express();
 
-router.use(limiter);
+app.use(limiter);
 
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 };
-
-router.use(express.static(path.join(__dirname, 'src')));
 
 router.get('/airdrop/ZEROCOINN', async (req, res) => {
   try {
@@ -41,12 +38,14 @@ router.get('/airdrop/ZEROCOINN', async (req, res) => {
   }
 });
 
-router.use(errorHandler);
+app.use(errorHandler);
 
-router.use('/api/', router);
+app.use('/api/', router);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
 
-module.exports = serverless(app);
+app.use('/.netlify/functions/api', router);
+
+module.exports.handler = serverless(app);
