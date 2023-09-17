@@ -15,6 +15,7 @@
     "@solana/web3.js": "1.78.5",
     "dotenv": "16.3.1",
     "express": "4.18.2",
-    "express-rate-limit": "7.0.1"
+    "express-rate-limit": "7.0.1",
+    "serverless-http": "3.2.0"
   }
 }

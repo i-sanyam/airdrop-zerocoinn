@@ -1,6 +1,11 @@
 const express = require('express');
+const { Router, } = require('express');
+const serverless = require('serverless-http');
+
 const path = require('path');
 const rateLimit = require('express-rate-limit');
+
+const router = Router();
 
 const limiter = rateLimit({
   windowMs: 3 * 60 * 1000, // 3 minutes
@@ -12,16 +17,16 @@ const { sendTokens } = require('./sol-helper');
 
 const app = express();
 
-app.use(limiter);
+router.use(limiter);
 
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 };
 
-app.use(express.static(path.join(__dirname, 'src')));
+router.use(express.static(path.join(__dirname, 'src')));
 
-app.get('/api/airdrop/ZEROCOINN', async (req, res) => {
+router.get('/api/airdrop/ZEROCOINN', async (req, res) => {
   try {
     const { destination_address, amount } = req.query;
     const { signature, txUrl, } = await sendTokens('ZEROCOINN', destination_address, amount);
@@ -36,8 +41,12 @@ app.get('/api/airdrop/ZEROCOINN', async (req, res) => {
   }
 });
 
-app.use(errorHandler);
+router.use(errorHandler);
+
+router.use('/api/', router);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
+
+module.exports = serverless(app);
