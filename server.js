@@ -20,10 +20,14 @@ const errorHandler = (err, req, res, next) => {
 };
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'src/index.html'));
 });
 
-app.get('/airdrop/ZEROCOINN', async (req, res) => {
+app.get('/images/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src/images/favicon.ico'));
+});
+
+app.get('/api/airdrop/ZEROCOINN', async (req, res) => {
   try {
     const { destination_address, amount } = req.query;
     const { signature } = await sendTokens('ZEROCOINN', destination_address, amount);
