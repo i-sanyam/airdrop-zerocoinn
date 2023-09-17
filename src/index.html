@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css" crossorigin="anonymous"
 		referrerpolicy="no-referrer" />
 	<style>
+		body {
+			margin: 0;
+		}
+
 		.errorMessage {
 			position: fixed;
 			top: 0;
@@ -18,14 +22,10 @@
 			padding: 16px;
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: center;
 			text-align: center;
 			width: 100%;
 		}
-
-		.errorMessageText {
-    	margin: 0 auto;
-  	}
 
 		.errorMessage button {
 			background-color: transparent;
@@ -33,6 +33,31 @@
 			color: #fff;
 			font-size: 16px;
 			cursor: pointer;
+			margin-left: 8px;
+		}
+
+		.successMessage {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			background-color: #52c41a;
+			color: #fff;
+			padding: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			width: 100%;
+		}
+
+		.successMessage button {
+			background-color: transparent;
+			border: none;
+			color: #fff;
+			font-size: 16px;
+			cursor: pointer;
+			margin-left: 8px;
 		}
 	</style>
 </head>
@@ -57,7 +82,12 @@
 				<span id="errorMessageText"></span>
 				<button type="button" onClick="handleCloseError()">X</button>
 			</div>
-			<div id="successMessage" style="color: green; margin-top: 16px;"></div>
+			<div id="successMessage" class="successMessage" style="display: none;">
+				<span id="successMessageText"></span>
+				<button type="button" onClick="handleCloseSuccess()">X</button>
+			</div>
+			<div id="signatureText" style="margin-top: 16px; color: green;"></div>
+			<div id="signatureUrl" style="margin-top: 16px; color: blue;"></div>
 		</form>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -75,31 +105,57 @@
 						destination_address: destinationAddress,
 					},
 				});
-				const successMessage = document.getElementById('successMessage');
-				successMessage.innerHTML = `\n<a href="${response.data.txUrl}">Signature: ${response.data.signature}</a>`;
-				const errorMessage = document.getElementById('errorMessage');
-				errorMessage.style.display = 'none';
+				setDisplayFlex('successMessage');
+				setTextContent('successMessageText', 'Transaction successful');
+				hideElementById('errorMessage');
+				setInnerHtml('signatureUrl', `<a href="${response.data.txUrl}" target="_blank">View transaction on Solana Explorer</a>`);
+				setTextContent('signatureText', `Signature: ${response.data.signature}`)
 			} catch (error) {
-				const errorMessage = document.getElementById('errorMessage');
-				const errorMessageText = document.getElementById('errorMessageText');
-				errorMessageText.textContent = error.response.data.message;
-				errorMessage.style.display = 'flex';
+				setDisplayFlex('errorMessage');
+				setTextContent('errorMessageText', error.response.data.message);
+				hideElementById('signatureUrl');
+				hideElementById('signatureText');
+				hideElementById('successMessage');
 			}
-			// console.log(response.data);
+		};
+
+		const setTextContent = (elementId, text) => {
+			const elem = document.getElementById(elementId);
+			signatureText.style.display = 'flex';
+			elem.textContent = text;
+		};
+
+		const setDisplayFlex = (elementId) => {
+			const elem = document.getElementById(elementId);
+			elem.style.display = 'flex';
+		};
+
+		const setInnerHtml = (elementId, html) => {
+			const elem = document.getElementById(elementId);
+			elem.style.display = 'flex';
+			elem.innerHTML = html;
 		};
 
 		const handleReset = () => {
 			const form = document.getElementById('myForm');
 			form.reset();
-			const errorMessage = document.getElementById('errorMessage');
-			errorMessage.style.display = 'none';
-			const successMessage = document.getElementById('successMessage');
-			successMessage.textContent = '';
+			hideElementById('signatureUrl');
+			hideElementById('successMessage');
+			hideElementById('errorMessage');
+			hideElementById('signatureText');
+		};
+
+		const hideElementById = (elementId) => {
+			const elem = document.getElementById(elementId);
+			elem.style.display = 'none';
 		};
 
 		const handleCloseError = () => {
-			const errorMessage = document.getElementById('errorMessage');
-			errorMessage.style.display = 'none';
+			hideElementById('errorMessage');
+		};
+
+		const handleCloseSuccess = () => {
+			hideElementById('successMessage');
 		};
 	</script>
 </body>
