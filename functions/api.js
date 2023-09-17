@@ -8,11 +8,6 @@ const { sendTokens } = require('../sol-helper');
 
 const app = express();
 
-const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-};
-
 router.get('/airdrop/ZEROCOINN', async (req, res) => {
   try {
     const { destination_address, amount } = req.query;
@@ -27,10 +22,6 @@ router.get('/airdrop/ZEROCOINN', async (req, res) => {
     });
   }
 });
-
-app.use(errorHandler);
-
-app.use('/api/', router);
 
 app.use('/.netlify/functions/api', router);
 
