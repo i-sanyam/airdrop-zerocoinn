@@ -28,3 +28,17 @@ This project uses [Tailwind CSS](https://tailwindcss.com/).
 Make sure to uncomment tailwind script tag and comment tailwind output stylesheet tag in `src/index.html` before starting.
 
 I have just not kept the `src/output.css` in `.gitignore` for a very quick setup without any changes.
+
+## Walkthrough
+
+### Frontend
+The repository is hosted at [Netlfiy](https://netlify.com). The `src` directory is published which contains the `index.html` which renders the Airdrop Form at opening the base URL. The same can be found in `netlify.toml`.
+
+### Backend
+The backend is built using [Express](https://expressjs.com/).
+
+Netlify hosts NodeJS applications on [AWS Lambda](https://aws.amazon.com/lambda/). So this project creates and exports serverless functions, and are defined in `functions` directory.
+
+It is very similar to normal express applications, the only difference being just that the express server is exported as a function, rather than listening on the express server on some port.
+
+More about [Netlfiy Functions](https://docs.netlify.com/functions/overview/).
